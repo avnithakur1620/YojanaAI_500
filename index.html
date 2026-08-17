@@ -3,597 +3,457 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>YojanaAI - Government Scheme Assistant</title>
+<title>YojanaAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{
- --navy:#123b5d;--teal:#168ba3;--light:#f4f8fa;
- --text:#193247;--muted:#687b88;--border:#dfe8ed;
- --green:#18a66b;--yellow:#e9a21b;--shadow:0 12px 35px #123b5d12
-}
-body{font-family:Inter,sans-serif;background:var(--light);color:var(--text);font-size:16px}
+:root{--n:#123b5d;--t:#1593a7;--bg:#f4f8fa;--w:#fff;--txt:#193247;--mut:#71818c;--bd:#dce6eb;--g:#18a66b}
+body{font-family:Inter,sans-serif;background:var(--bg);color:var(--txt);font-size:15px}
 button,input,select{font:inherit}button{cursor:pointer}
-a{text-decoration:none;cursor:pointer}
-.hidden{display:none!important}
-
-/* NAVBAR */
-nav{position:fixed;top:0;width:100%;height:72px;background:#ffffffee;
-border-bottom:1px solid var(--border);z-index:10;backdrop-filter:blur(10px)}
-.nav{max-width:1200px;height:100%;margin:auto;padding:0 22px;
-display:flex;align-items:center;justify-content:space-between}
-.logo{font-size:23px;font-weight:800;color:var(--navy);display:flex;align-items:center;gap:9px}
-.logo span{color:var(--teal)}
-.logo i{background:linear-gradient(135deg,var(--navy),var(--teal));color:#fff;
-width:42px;height:42px;border-radius:11px;display:grid;place-items:center}
-.links{display:flex;gap:27px}
-.links a{font-size:14px;color:var(--muted);font-weight:600}
-.links a:hover{color:var(--teal)}
-.nav button{border:1px solid var(--border);background:#fff;border-radius:9px;
-padding:10px 14px;color:var(--navy)}
-.nav .login{background:var(--navy);color:#fff;border-color:var(--navy)}
-
-/* HERO */
-.hero{padding:145px 22px 90px;min-height:690px;
-background:radial-gradient(circle at 85% 25%,#d7f5f8,transparent 32%),
-linear-gradient(#fff,#f4f9fa)}
-.heroIn{max-width:1200px;margin:auto;display:grid;grid-template-columns:1.1fr .9fr;
-gap:70px;align-items:center}
-.badge{display:inline-block;background:#e5f6f8;color:var(--teal);
-padding:9px 14px;border-radius:30px;font-size:12px;font-weight:800;margin-bottom:20px}
-.hero h1{font-size:60px;line-height:1.08;letter-spacing:-2px;color:var(--navy)}
-.hero h1 span{color:var(--teal)}
-.hero p{font-size:18px;line-height:1.8;color:var(--muted);margin:22px 0;max-width:650px}
+nav{height:70px;background:#fff;display:flex;align-items:center;padding:0 6%;
+justify-content:space-between;border-bottom:1px solid var(--bd);position:fixed;
+top:0;width:100%;z-index:5}
+.logo{font-size:22px;font-weight:800;color:var(--n);cursor:pointer}
+.logo span{color:var(--t)}
+nav div{display:flex;gap:22px;align-items:center}
+nav a{font-size:13px;color:var(--mut);cursor:pointer}
+nav button{border:1px solid var(--bd);background:#fff;border-radius:8px;padding:9px 13px}
+.login,.primary{background:var(--n)!important;color:#fff!important;border:0!important}
+.page{display:none;padding-top:70px;min-height:100vh}
+.page.show{display:block}
+.hero{padding:145px 7% 90px;min-height:680px;background:linear-gradient(135deg,#fff,#eaf7f8)}
+.heroGrid{max-width:1200px;margin:auto;display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
+.badge{display:inline-block;background:#dff4f6;color:var(--t);padding:8px 13px;
+border-radius:20px;font-size:11px;font-weight:800;margin-bottom:18px}
+.hero h1{font-size:58px;line-height:1.08;color:var(--n);letter-spacing:-2px}
+.hero h1 span{color:var(--t)}
+.hero p{font-size:17px;line-height:1.8;color:var(--mut);max-width:650px;margin:22px 0}
 .btns{display:flex;gap:12px;flex-wrap:wrap}
-.primary,.secondary{padding:14px 21px;border-radius:9px;font-size:15px;font-weight:700}
-.primary{background:linear-gradient(135deg,var(--navy),var(--teal));color:white;border:0}
-.secondary{background:#fff;border:1px solid var(--border);color:var(--navy)}
-.stats{display:flex;gap:45px;margin-top:40px}
-.stats strong{display:block;font-size:28px;color:var(--navy)}
-.stats small{font-size:12px;color:var(--muted)}
-
-.mock{background:#fff;border:1px solid var(--border);border-radius:22px;padding:22px;
-box-shadow:0 25px 60px #123b5d20}
-.mockHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
-.mockHead strong{font-size:16px;color:var(--navy)}
-.avatar{width:40px;height:40px;border-radius:50%;background:#e7f6f8;
-display:grid;place-items:center;color:var(--teal)}
-.mini{padding:17px;border:1px solid var(--border);border-radius:12px;margin:10px 0}
-.mini.blue{background:linear-gradient(135deg,var(--navy),var(--teal));color:white}
-.miniTop{display:flex;justify-content:space-between;gap:10px}
-.mini h4{font-size:14px}.mini small{font-size:11px;color:var(--muted)}
-.blue small{color:#d9eef2}
-.score{font-size:11px;font-weight:800;color:var(--green);background:#e8f8ef;
-padding:5px 8px;border-radius:20px;height:max-content}
-.blue .score{background:#ffffff25;color:#fff}
-
-/* COMMON */
-section{padding:85px 22px}
-.container,.pageIn{max-width:1200px;margin:auto}
-.title{text-align:center;max-width:700px;margin:0 auto 45px}
-.title label{font-size:12px;font-weight:800;color:var(--teal);letter-spacing:2px}
-.title h2{font-size:38px;color:var(--navy);margin:9px 0}
-.title p{font-size:16px;color:var(--muted)}
+.btn{padding:14px 20px;border-radius:9px;font-weight:700;border:1px solid var(--bd);background:#fff;color:var(--n)}
+.stats{display:flex;gap:40px;margin-top:40px}.stats b{display:block;font-size:27px;color:var(--n)}
+.stats small{font-size:11px;color:var(--mut)}
+.mock,.card,.panel,.stat{background:var(--w);border:1px solid var(--bd);border-radius:17px;box-shadow:0 10px 30px #123b5d10}
+.mock{padding:22px}.mock h3{font-size:16px;margin-bottom:15px}
+.mini{padding:16px;border:1px solid var(--bd);border-radius:11px;margin:9px 0}
+.mini b{font-size:13px}.mini small{display:block;color:var(--mut);margin-top:5px}
+.mini strong{float:right;background:#e6f8ef;color:var(--g);padding:5px 8px;border-radius:15px;font-size:10px}
+section{padding:80px 6%}.container{max-width:1200px;margin:auto}
+.title{text-align:center;max-width:700px;margin:0 auto 40px}.title small{color:var(--t);font-weight:800}
+.title h2{font-size:38px;color:var(--n);margin:8px}.title p{color:var(--mut);font-size:15px}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.card{background:#fff;border:1px solid var(--border);border-radius:17px;padding:25px;
-box-shadow:var(--shadow)}
-.icon{width:50px;height:50px;border-radius:12px;background:#e8f7f9;color:var(--teal);
-display:grid;place-items:center;font-size:20px;margin-bottom:17px}
-.card h3{font-size:19px;color:var(--navy);margin-bottom:8px}
-.card p{font-size:14px;color:var(--muted);line-height:1.7}
-
-/* FEATURES */
-.feature{transition:.2s}
-.feature:hover{transform:translateY(-5px)}
-.feature p{font-size:14px}
-
-/* STEPS */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:35px}
-.step{text-align:center}
-.stepNo{width:65px;height:65px;border-radius:50%;background:var(--navy);
-color:white;display:grid;place-items:center;margin:auto auto 16px;font-size:20px;font-weight:800}
-.step h3{font-size:19px;color:var(--navy)}
-.step p{font-size:14px;color:var(--muted);margin-top:7px}
-
-/* SCHEMES */
-.schemeTop{display:flex;justify-content:space-between}
-.scheme h3{font-size:18px}
-.scheme p{font-size:13px}
-.tags{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0}
-.tag{font-size:10px;background:#f0f4f6;padding:6px 8px;border-radius:6px;color:#637580}
-.benefit{font-size:14px;color:var(--green);font-weight:800}
-.actions{display:flex;gap:8px;margin-top:17px}
-.actions button{flex:1;padding:10px;border-radius:8px;font-size:12px;font-weight:700}
-.view{background:#fff;border:1px solid var(--border);color:var(--navy)}
-.save{background:var(--navy);border:0;color:white}
-
-/* CTA */
-.cta{max-width:1200px;margin:auto;background:linear-gradient(135deg,var(--navy),var(--teal));
-color:#fff;border-radius:20px;padding:45px;display:flex;justify-content:space-between;
-align-items:center;gap:20px}
-.cta h2{font-size:30px}.cta p{font-size:14px;color:#d8eef3;margin-top:7px}
-.cta button{border:0;background:#fff;color:var(--navy);padding:13px 20px;
-border-radius:8px;font-weight:800}
-
-/* PAGES */
-.page{display:none;padding-top:72px;min-height:100vh}
-.page.active{display:block}
-.pageIn{padding:45px 22px 80px}
-.pageTitle{margin-bottom:28px}
-.pageTitle h1{font-size:38px;color:var(--navy)}
-.pageTitle p{font-size:15px;color:var(--muted);margin-top:5px}
-.statsGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px}
-.stat{background:#fff;border:1px solid var(--border);border-radius:15px;padding:20px}
-.stat i{width:42px;height:42px;background:#e9f7f9;color:var(--teal);
-display:grid;place-items:center;border-radius:10px;margin-bottom:12px}
-.stat small{font-size:12px;color:var(--muted)}
-.stat strong{display:block;font-size:28px;color:var(--navy);margin-top:3px}
-.two{display:grid;grid-template-columns:1.5fr 1fr;gap:20px}
-.panel{background:#fff;border:1px solid var(--border);border-radius:17px;padding:24px;
-box-shadow:var(--shadow)}
-.panel h3{font-size:18px;color:var(--navy);margin-bottom:18px}
-.panelHead{display:flex;justify-content:space-between;align-items:center}
-.rec{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--border)}
-.rec:last-child{border:0}
-.rec .icon{width:42px;height:42px;margin:0;font-size:16px}
-.recInfo{flex:1}.recInfo strong{font-size:14px;display:block;color:var(--navy)}
-.recInfo small{font-size:11px;color:var(--muted)}
-.rec b{font-size:13px;color:var(--green)}
+.card{padding:25px}.icon{width:48px;height:48px;border-radius:11px;background:#e7f6f8;
+display:grid;place-items:center;font-size:21px;margin-bottom:16px}.card h3{font-size:18px;color:var(--n);margin-bottom:8px}
+.card p{font-size:13px;color:var(--mut);line-height:1.7}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:35px}.step{text-align:center}
+.step b{display:grid;place-items:center;width:60px;height:60px;border-radius:50%;
+background:var(--n);color:#fff;margin:auto auto 15px;font-size:19px}
+.step h3{font-size:18px;color:var(--n)}.step p{font-size:13px;color:var(--mut);margin-top:7px}
+.cta{max-width:1200px;margin:auto;background:linear-gradient(135deg,var(--n),var(--t));
+color:#fff;border-radius:18px;padding:40px;display:flex;justify-content:space-between;align-items:center}
+.cta h2{font-size:28px}.cta p{font-size:13px;margin-top:6px;color:#dceff2}
+.cta button{padding:13px 18px;border:0;border-radius:8px;color:var(--n);font-weight:700}
+.pageIn{max-width:1200px;margin:auto;padding:45px 20px}
+.pageTitle{margin-bottom:25px}.pageTitle h1{font-size:38px;color:var(--n)}
+.pageTitle p{color:var(--mut);font-size:14px;margin-top:5px}
+.statsGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:20px}
+.stat{padding:20px}.stat b{font-size:28px;color:var(--n);display:block;margin-top:8px}
+.stat small{color:var(--mut);font-size:11px}
+.two{display:grid;grid-template-columns:1.5fr 1fr;gap:20px}.panel{padding:24px}
+.panel h3{font-size:18px;color:var(--n);margin-bottom:18px}
+.rec{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--bd)}
+.rec:last-child{border:0}.rec .icon{width:40px;height:40px;margin:0;font-size:16px}
+.rec div:nth-child(2){flex:1}.rec b{color:var(--g);font-size:13px}.rec strong{font-size:13px;display:block}
+.rec small{font-size:10px;color:var(--mut)}
 .quick{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.quick button{background:#fafcfd;border:1px solid var(--border);border-radius:10px;
-padding:15px;text-align:left;color:var(--navy);font-size:12px;font-weight:700}
-.quick i{display:block;color:var(--teal);font-size:18px;margin-bottom:8px}
-
-/* SEARCH */
-.search{display:flex;background:#fff;border:1px solid var(--border);padding:7px;
-border-radius:10px;margin-bottom:14px}
-.search input{flex:1;border:0;outline:0;padding:9px;font-size:15px}
-.search button{background:var(--navy);border:0;color:#fff;border-radius:7px;padding:9px 15px}
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
-.filter{border:1px solid var(--border);background:#fff;border-radius:20px;
-padding:8px 14px;font-size:12px;color:var(--muted)}
-.filter.active{background:var(--navy);color:#fff}
-
-/* MATCHER */
-.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:17px}
-label{font-size:13px;font-weight:700;color:var(--navy);display:block;margin-bottom:7px}
-input,select{width:100%;padding:13px;border:1px solid var(--border);
-border-radius:9px;outline:0;background:#fff;font-size:14px;color:var(--text)}
-.full{grid-column:1/-1}
-.matchBtn{width:100%;margin-top:20px}
-.result{margin-top:20px}
-
-/* CHAT */
-.chat{max-width:850px;margin:auto;background:#fff;border:1px solid var(--border);
-border-radius:18px;overflow:hidden}
-.chatHead{background:linear-gradient(135deg,var(--navy),var(--teal));color:#fff;
-padding:18px;display:flex;gap:12px;align-items:center}
-.chatHead i{width:43px;height:43px;border-radius:10px;background:#ffffff22;
-display:grid;place-items:center;font-size:18px}
-.chatHead strong{font-size:15px}.chatHead small{display:block;font-size:10px;color:#d5edf2}
-.messages{height:430px;overflow:auto;padding:22px;background:#f7fafb}
-.msg{max-width:75%;padding:13px 16px;border-radius:13px;font-size:13px;
-line-height:1.6;margin-bottom:10px}
-.bot{background:#fff;border:1px solid var(--border)}
-.user{margin-left:auto;background:var(--navy);color:#fff}
-.chatInput{display:flex;gap:8px;padding:10px;border-top:1px solid var(--border)}
-.chatInput input{border:0}.chatInput button{width:45px;background:var(--navy);
-border:0;color:#fff;border-radius:8px}
-
-/* TRACKER */
-.timeline{display:flex;justify-content:space-between;position:relative;margin:50px 5px}
-.timeline:before{content:"";position:absolute;left:8%;right:8%;top:20px;height:4px;background:#e4eaed}
-.tStep{width:20%;text-align:center;position:relative;z-index:1}
-.circle{width:42px;height:42px;border-radius:50%;background:#e4eaed;
-border:4px solid white;margin:auto;display:grid;place-items:center;font-size:12px}
-.done .circle{background:var(--green);color:#fff}.current .circle{background:var(--yellow);color:#fff}
-.tStep small{font-size:10px;color:var(--muted);display:block;margin-top:8px}
-
-/* DOCS */
-.doc{display:flex;align-items:center;gap:12px;padding:13px;border:1px solid var(--border);
-border-radius:10px;margin:8px 0}
-.doc .icon{width:40px;height:40px;margin:0;font-size:16px}
-.docInfo{flex:1}.docInfo strong{font-size:13px;display:block;color:var(--navy)}
-.docInfo small{font-size:10px;color:var(--muted)}
-.status{font-size:9px;font-weight:800;padding:6px 8px;border-radius:6px}
-.ready{color:var(--green);background:#e8f8ef}.missing{color:#d34d4d;background:#fff0f0}
-
-/* MODALS */
-.overlay{position:fixed;inset:0;background:#092438aa;z-index:100;display:none;
-place-items:center;padding:20px}
-.overlay.show{display:grid}
-.modal{width:100%;max-width:580px;max-height:90vh;overflow:auto;background:#fff;
-border-radius:17px;padding:27px}
-.modalHead{display:flex;justify-content:space-between;margin-bottom:18px}
-.modalHead h2{font-size:24px;color:var(--navy)}
-.close{border:0;background:#eef3f5;border-radius:7px;width:35px;height:35px}
-.detail{padding:13px 0;border-bottom:1px solid var(--border)}
-.detail strong{font-size:13px;color:var(--navy);display:block;margin-bottom:4px}
-.detail span{font-size:12px;color:var(--muted);line-height:1.6}
-
-/* FOOTER */
-footer{background:#0b293f;color:#fff;padding:45px 22px 20px}
-.footer{max-width:1200px;margin:auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:35px}
-.footer p,.footer a{font-size:12px;color:#9db2be;margin-top:9px}
-.footer a{display:block;cursor:pointer}
-.footer h4{font-size:14px}.copy{max-width:1200px;margin:30px auto 0;
-border-top:1px solid #ffffff18;padding-top:15px;font-size:10px;color:#78909d}
-
-/* RESPONSIVE */
-@media(max-width:900px){
-.heroIn{grid-template-columns:1fr;text-align:center}.hero p{margin:20px auto}
-.btns,.stats{justify-content:center}.grid{grid-template-columns:1fr 1fr}
-.two{grid-template-columns:1fr}.statsGrid{grid-template-columns:1fr 1fr}
-.footer{grid-template-columns:1fr 1fr}.links{display:none}
+.quick button{padding:16px;text-align:left;border:1px solid var(--bd);background:#fafcfd;
+border-radius:9px;color:var(--n);font-weight:700;font-size:12px}
+.search{display:flex;background:#fff;border:1px solid var(--bd);padding:6px;border-radius:9px;margin-bottom:12px}
+.search input{flex:1;border:0;outline:0;padding:10px}.search button{background:var(--n);color:#fff;border:0;border-radius:7px;padding:8px 15px}
+.filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px}
+.filter{border:1px solid var(--bd);background:#fff;border-radius:20px;padding:8px 13px;font-size:11px}
+.filter.active{background:var(--n);color:#fff}
+.schemeTop{display:flex;justify-content:space-between}.score{font-size:10px;color:var(--g);background:#e8f8ef;
+height:max-content;padding:6px 8px;border-radius:15px}.tags{display:flex;gap:5px;margin:13px 0}
+.tag{font-size:9px;background:#eef3f5;padding:5px 7px;border-radius:5px}.benefit{font-size:13px;color:var(--g);font-weight:700}
+.actions{display:flex;gap:7px;margin-top:15px}.actions button{flex:1;padding:9px;border-radius:7px;font-size:11px;font-weight:700}
+.view{border:1px solid var(--bd);background:#fff;color:var(--n)}.save{border:0;background:var(--n);color:#fff}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:16px}.form label{font-size:12px;font-weight:700;color:var(--n)}
+.form input,.form select{width:100%;padding:12px;margin-top:6px;border:1px solid var(--bd);border-radius:8px;outline:0}
+.form .full{grid-column:1/-1}.match{width:100%;margin-top:20px;padding:14px}
+.chat{max-width:850px;margin:auto;background:#fff;border:1px solid var(--bd);border-radius:16px;overflow:hidden}
+.chatHead{background:linear-gradient(135deg,var(--n),var(--t));color:#fff;padding:18px;font-weight:700}
+.messages{height:400px;padding:20px;background:#f7fafb;overflow:auto}.msg{max-width:75%;padding:12px 15px;
+border-radius:12px;margin-bottom:10px;font-size:13px;line-height:1.6;background:#fff;border:1px solid var(--bd)}
+.msg.user{margin-left:auto;background:var(--n);color:#fff;border:0}.chatInput{display:flex;padding:9px;border-top:1px solid var(--bd)}
+.chatInput input{flex:1;border:0;outline:0;padding:10px}.chatInput button{width:45px;background:var(--n);color:#fff;border:0;border-radius:7px}
+.timeline{display:flex;justify-content:space-between;margin:50px 0;position:relative}
+.timeline:before{content:"";position:absolute;left:8%;right:8%;top:18px;height:4px;background:#e2e9ec}
+.tstep{position:relative;z-index:1;text-align:center;width:20%}.circle{width:38px;height:38px;
+border-radius:50%;background:#e1e8eb;margin:auto;display:grid;place-items:center;border:4px solid #fff;font-size:11px}
+.done .circle{background:var(--g);color:#fff}.current .circle{background:#e5a51c;color:#fff}
+.tstep small{font-size:9px;color:var(--mut);display:block;margin-top:8px}
+.doc{display:flex;align-items:center;gap:12px;border:1px solid var(--bd);padding:12px;border-radius:9px;margin:8px 0}
+.doc .icon{width:40px;height:40px;margin:0}.doc div:nth-child(2){flex:1}.doc strong{font-size:12px;display:block}
+.doc small{font-size:10px;color:var(--mut)}.status{font-size:9px;padding:6px;border-radius:5px;font-weight:700}
+.ready{background:#e8f8ef;color:var(--g)}.missing{background:#fff0f0;color:#d54c4c}
+.overlay{display:none;position:fixed;inset:0;background:#082538aa;z-index:20;place-items:center;padding:20px}
+.overlay.show{display:grid}.modal{background:#fff;padding:25px;border-radius:16px;width:100%;max-width:550px}
+.modalHead{display:flex;justify-content:space-between;margin-bottom:15px}.modal h2{font-size:24px;color:var(--n)}
+.close{border:0;background:#edf2f4;width:32px;height:32px;border-radius:7px}
+.detail{padding:12px 0;border-bottom:1px solid var(--bd)}.detail b{display:block;font-size:12px;color:var(--n)}
+.detail span{font-size:11px;color:var(--mut);line-height:1.7}
+footer{background:#0b293f;color:#fff;padding:40px 7%;margin-top:0}
+footer p{font-size:11px;color:#9eb1bb;margin-top:8px}
+.dark{--bg:#091d29;--w:#102c3b;--txt:#edf5f7;--mut:#a2b4bc;--bd:#274756}
+.dark nav,.dark .search,.dark .filter,.dark .quick button,.dark input,.dark select{background:#102c3b;color:#fff}
+.dark .hero{background:#091d29}.dark .hero h1,.dark .title h2,.dark .card h3,.dark .panel h3,
+.dark .pageTitle h1,.dark .stat b,.dark .rec strong,.dark label,.dark .modal h2{color:#fff}
+@media(max-width:850px){
+.heroGrid,.two{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}
+.statsGrid{grid-template-columns:1fr 1fr}.links{display:none}.hero h1{font-size:45px}
 }
-@media(max-width:600px){
-.hero h1{font-size:43px}.hero p{font-size:16px}.grid,.steps,.formGrid{grid-template-columns:1fr}
-.statsGrid{grid-template-columns:1fr 1fr}.cta{flex-direction:column;align-items:flex-start}
-.footer{grid-template-columns:1fr}.pageTitle h1{font-size:30px}
-.timeline{flex-direction:column;gap:20px}.timeline:before{left:20px;top:20px;bottom:20px;width:4px;height:auto}
-.tStep{width:100%;display:flex;align-items:center;gap:12px;text-align:left}.circle{margin:0}
+@media(max-width:550px){
+.grid,.steps,.form{grid-template-columns:1fr}.hero h1{font-size:38px}.hero{text-align:center}
+.stats{justify-content:center;gap:20px}.statsGrid{grid-template-columns:1fr 1fr}.cta{display:block}
+.cta button{margin-top:20px}.timeline{flex-direction:column;gap:18px}.timeline:before{left:18px;top:18px;bottom:18px;width:4px;height:auto}
+.tstep{width:100%;display:flex;align-items:center;text-align:left;gap:10px}.circle{margin:0}
 }
-
-/* DARK MODE */
-.dark{--light:#091c28;--text:#e8f1f5;--muted:#9bb0bb;--border:#244352}
-.dark .card,.dark .panel,.dark .stat,.dark .mock,.dark .mini,
-.dark .search,.dark input,.dark select,.dark .secondary,.dark .filter,
-.dark .quick button,.dark .chat,.dark .bot,.dark .modal,.dark .doc{background:#102b3a;color:#e8f1f5}
-.dark nav{background:#0c2432ee}.dark .links a,.dark .title p{color:#9bb0bb}
-.dark .hero{background:#091c28}.dark .hero h1,.dark .title h2,.dark .card h3,
-.dark .panel h3,.dark .pageTitle h1,.dark .stat strong,.dark .recInfo strong,
-.dark label,.dark .modalHead h2,.dark .detail strong{color:#e8f1f5}
 </style>
 </head>
 
 <body>
 
 <nav>
-<div class="nav">
-<a class="logo" onclick="home()"><i class="fa-solid fa-landmark"></i>Yojana<span>AI</span></a>
-<div class="links">
-<a onclick="home()">Home</a><a href="#features">Features</a>
-<a onclick="openPage('schemes')">Schemes</a><a href="#how">How It Works</a>
-<a onclick="openPage('assistant')">AI Assistant</a>
-</div>
+<div class="logo" onclick="show('home')">🏛️ Yojana<span>AI</span></div>
 <div>
-<button onclick="dark()">◐</button>
-<button class="login" onclick="login()">Login</button>
-</div>
+<a onclick="show('home')">Home</a>
+<a onclick="show('schemes')">Schemes</a>
+<a onclick="show('matcher')">AI Matcher</a>
+<a onclick="show('assistant')">AI Assistant</a>
+<button onclick="document.body.classList.toggle('dark')">◐</button>
+<button class="login" onclick="openLogin()">Login</button>
 </div>
 </nav>
 
-<main id="home">
+<!-- HOME -->
+<main id="home" class="page show">
 
-<section class="hero">
-<div class="heroIn">
+<div class="hero">
+<div class="heroGrid">
 <div>
 <div class="badge">✦ AI-POWERED GOVERNMENT ASSISTANT</div>
 <h1>Discover the benefits <span>you deserve.</span></h1>
 <p>Find government schemes based on your age, income, occupation, state and goals — all in one simple platform.</p>
 <div class="btns">
-<button class="primary" onclick="login()">✦ Find My Schemes</button>
-<button class="secondary" onclick="openPage('schemes')">Explore Schemes</button>
+<button class="btn primary" onclick="openLogin()">Find My Schemes →</button>
+<button class="btn" onclick="show('schemes')">Explore Schemes</button>
 </div>
 <div class="stats">
-<div><strong>1000+</strong><small>Government Schemes</small></div>
-<div><strong>28+</strong><small>States & UTs</small></div>
-<div><strong>AI</strong><small>Smart Matching</small></div>
+<div><b>1000+</b><small>Government Schemes</small></div>
+<div><b>28+</b><small>States & UTs</small></div>
+<div><b>AI</b><small>Smart Matching</small></div>
 </div>
 </div>
 
 <div class="mock">
-<div class="mockHead"><strong>Your Personalized Dashboard</strong><div class="avatar">👤</div></div>
-<div class="mini blue"><div class="miniTop"><div><h4>Post-Matric Scholarship</h4><small>Education Support</small></div><span class="score">96%</span></div></div>
-<div class="mini"><div class="miniTop"><div><h4>Student Credit Scheme</h4><small>Financial Assistance</small></div><span class="score">91%</span></div></div>
-<div class="mini"><div class="miniTop"><div><h4>Skill Development Scheme</h4><small>Employment</small></div><span class="score">84%</span></div></div>
+<h3>Personalized Recommendations</h3>
+<div class="mini"><strong>96% Match</strong><b>Post-Matric Scholarship</b><small>Education • ₹25,000/year</small></div>
+<div class="mini"><strong>91% Match</strong><b>Student Credit Scheme</b><small>Financial Assistance</small></div>
+<div class="mini"><strong>84% Match</strong><b>Skill Development Scheme</b><small>Employment • Free training</small></div>
 </div>
 </div>
-</section>
+</div>
 
-<section id="features">
+<section>
 <div class="container">
-<div class="title"><label>POWERFUL FEATURES</label><h2>Everything you need in one place</h2><p>Discover, understand and track government benefits with AI.</p></div>
+<div class="title"><small>POWERFUL FEATURES</small><h2>Everything you need</h2><p>Discover, understand and track government benefits with AI.</p></div>
 <div class="grid">
-<div class="card feature"><div class="icon">🤖</div><h3>AI Scheme Matcher</h3><p>Get personalized scheme recommendations based on your profile.</p></div>
-<div class="card feature"><div class="icon">💬</div><h3>AI Assistant</h3><p>Ask questions about eligibility, documents and applications.</p></div>
-<div class="card feature"><div class="icon">📄</div><h3>Document AI</h3><p>Perform basic AI-assisted document checks.</p></div>
-<div class="card feature"><div class="icon">📋</div><h3>Application Tracker</h3><p>Track applications from submission to benefit.</p></div>
-<div class="card feature"><div class="icon">🔔</div><h3>Smart Alerts</h3><p>Get reminders about deadlines and missing documents.</p></div>
-<div class="card feature"><div class="icon">🛡️</div><h3>Scam Protection</h3><p>Identify official sources and avoid common scams.</p></div>
-</div>
-</div>
-</section>
-
-<section id="how">
-<div class="container">
-<div class="title"><label>HOW IT WORKS</label><h2>Three simple steps</h2></div>
-<div class="steps">
-<div class="step"><div class="stepNo">1</div><h3>Tell us about yourself</h3><p>Enter your age, income, state and occupation.</p></div>
-<div class="step"><div class="stepNo">2</div><h3>AI finds your matches</h3><p>Your profile is compared with scheme criteria.</p></div>
-<div class="step"><div class="stepNo">3</div><h3>Apply confidently</h3><p>Get documents, deadlines and guidance.</p></div>
+<div class="card"><div class="icon">🤖</div><h3>AI Scheme Matcher</h3><p>Get recommendations based on your personal profile.</p></div>
+<div class="card"><div class="icon">💬</div><h3>AI Assistant</h3><p>Ask questions about eligibility and documents.</p></div>
+<div class="card"><div class="icon">📄</div><h3>Document AI</h3><p>Check documents with AI-assisted validation.</p></div>
+<div class="card"><div class="icon">📋</div><h3>Application Tracker</h3><p>Track your application journey.</p></div>
+<div class="card"><div class="icon">🔔</div><h3>Smart Alerts</h3><p>Never miss an important deadline.</p></div>
+<div class="card"><div class="icon">🛡️</div><h3>Scam Protection</h3><p>Identify official sources and avoid common scams.</p></div>
 </div>
 </div>
 </section>
 
 <section>
 <div class="container">
-<div class="title"><label>POPULAR</label><h2>Government Schemes</h2></div>
-<div class="grid" id="featured"></div>
+<div class="title"><small>HOW IT WORKS</small><h2>Three simple steps</h2></div>
+<div class="steps">
+<div class="step"><b>1</b><h3>Tell us about yourself</h3><p>Age, income, state and occupation.</p></div>
+<div class="step"><b>2</b><h3>AI finds matches</h3><p>Compare your profile with scheme criteria.</p></div>
+<div class="step"><b>3</b><h3>Apply confidently</h3><p>Get documents and application guidance.</p></div>
+</div>
 </div>
 </section>
 
-<section><div class="cta">
-<div><h2>Not sure what you qualify for?</h2><p>Let AI analyze your profile and find potential schemes.</p></div>
-<button onclick="login()">Start AI Matching →</button>
-</div></section>
+<section>
+<div class="cta"><div><h2>Not sure what you qualify for?</h2><p>Let AI analyze your profile.</p></div>
+<button onclick="show('matcher')">Start AI Matching →</button></div>
+</section>
 </main>
 
 <!-- DASHBOARD -->
-<section class="page" id="dashboard">
+<div id="dashboard" class="page">
 <div class="pageIn">
-<div class="pageTitle"><h1>Good afternoon, Avni 👋</h1><p>Your personalized government benefits overview.</p></div>
+<div class="pageTitle"><h1>Good afternoon, Avni 👋</h1><p>Your government benefits overview.</p></div>
 <div class="statsGrid">
-<div class="stat"><i>🎯</i><small>Potential Matches</small><strong>6</strong></div>
-<div class="stat"><i>⏳</i><small>Applications</small><strong>2</strong></div>
-<div class="stat"><i>🔔</i><small>Deadlines</small><strong>3</strong></div>
-<div class="stat"><i>₹</i><small>Potential Benefits</small><strong>₹75K+</strong></div>
+<div class="stat"><small>Potential Matches</small><b>6</b></div>
+<div class="stat"><small>Applications</small><b>2</b></div>
+<div class="stat"><small>Deadlines</small><b>3</b></div>
+<div class="stat"><small>Potential Benefits</small><b>₹75K+</b></div>
 </div>
 <div class="two">
-<div class="panel"><h3>🤖 Schemes You May Be Eligible For</h3><div id="recommendations"></div></div>
+<div class="panel"><h3>🤖 Schemes You May Be Eligible For</h3><div id="recs"></div></div>
 <div class="panel"><h3>⚡ Quick Actions</h3><div class="quick">
-<button onclick="openPage('matcher')">🤖 Find Schemes</button>
-<button onclick="openPage('tracker')">📋 Track Application</button>
-<button onclick="openPage('documents')">📄 Documents</button>
-<button onclick="openPage('assistant')">💬 Ask AI</button>
+<button onclick="show('matcher')">🤖 Find Schemes</button>
+<button onclick="show('tracker')">📋 Track Application</button>
+<button onclick="show('documents')">📄 Documents</button>
+<button onclick="show('assistant')">💬 Ask AI</button>
 </div></div>
 </div>
 </div>
-</section>
+</div>
 
 <!-- SCHEMES -->
-<section class="page" id="schemesPage">
+<div id="schemes" class="page">
 <div class="pageIn">
-<div class="pageTitle"><h1>Explore Government Schemes</h1><p>Search schemes according to your needs.</p></div>
-<div class="search"><input id="search" placeholder="Search scholarships, jobs, housing..." oninput="search()"><button>🔎</button></div>
+<div class="pageTitle"><h1>Explore Government Schemes</h1><p>Find schemes based on your needs.</p></div>
+<div class="search"><input id="searchBox" placeholder="Search schemes..." oninput="renderSchemes()"><button>🔎</button></div>
 <div class="filters">
-<button class="filter active" onclick="filter('All',this)">All</button>
-<button class="filter" onclick="filter('Education',this)">Education</button>
-<button class="filter" onclick="filter('Employment',this)">Employment</button>
-<button class="filter" onclick="filter('Financial',this)">Financial</button>
-<button class="filter" onclick="filter('Housing',this)">Housing</button>
+<button class="filter active" onclick="setFilter('All',this)">All</button>
+<button class="filter" onclick="setFilter('Education',this)">Education</button>
+<button class="filter" onclick="setFilter('Employment',this)">Employment</button>
+<button class="filter" onclick="setFilter('Financial',this)">Financial</button>
+<button class="filter" onclick="setFilter('Housing',this)">Housing</button>
 </div>
-<div class="grid" id="allSchemes"></div>
+<div class="grid" id="schemeGrid"></div>
 </div>
-</section>
+</div>
 
 <!-- MATCHER -->
-<section class="page" id="matcher">
+<div id="matcher" class="page">
 <div class="pageIn">
-<div class="pageTitle"><h1>🤖 AI Scheme Matcher</h1><p>Tell us about yourself and discover potential matches.</p></div>
+<div class="pageTitle"><h1>🤖 AI Scheme Matcher</h1><p>Enter your details to find potential matches.</p></div>
 <div class="panel">
-<div class="formGrid">
+<div class="form">
 <div><label>Age</label><input id="age" type="number" value="20"></div>
-<div><label>State</label><select id="state"><option>Himachal Pradesh</option><option>Punjab</option><option>Haryana</option><option>Delhi</option><option>Maharashtra</option></select></div>
+<div><label>State</label><select id="state"><option>Himachal Pradesh</option><option>Punjab</option><option>Haryana</option><option>Delhi</option></select></div>
 <div><label>Occupation</label><select id="occupation"><option>Student</option><option>Farmer</option><option>Job Seeker</option><option>Entrepreneur</option></select></div>
-<div><label>Annual Family Income</label><input id="income" type="number" value="250000"></div>
-<div><label>Family Size</label><select><option>2</option><option selected>4</option><option>5</option><option>6+</option></select></div>
-<div><label>Main Goal</label><select id="goal"><option>Education</option><option>Employment</option><option>Financial Assistance</option><option>Housing</option></select></div>
+<div><label>Family Income</label><input id="income" type="number" value="250000"></div>
+<div class="full"><label>What are you looking for?</label>
+<select id="goal"><option>Education</option><option>Employment</option><option>Financial</option><option>Housing</option></select></div>
 </div>
-<button class="primary matchBtn" onclick="match()">✦ Find My Schemes</button>
-<div id="result"></div>
+<button class="primary match" onclick="match()">✦ Find My Schemes</button>
+<div id="matchResult"></div>
 </div>
 </div>
-</section>
+</div>
 
 <!-- ASSISTANT -->
-<section class="page" id="assistant">
+<div id="assistant" class="page">
 <div class="pageIn">
-<div class="pageTitle"><h1>💬 AI Government Assistant</h1><p>Ask questions about government schemes in simple language.</p></div>
+<div class="pageTitle"><h1>💬 AI Government Assistant</h1><p>Ask anything about government schemes.</p></div>
 <div class="chat">
-<div class="chatHead"><i>🤖</i><div><strong>YojanaAI Assistant</strong><small>Online • Ready to help</small></div></div>
-<div class="messages" id="messages"><div class="msg bot">Hello! 👋<br><br>I can help you find schemes, understand eligibility and required documents.<br><br>Try asking: <b>"What scholarships can I get?"</b></div></div>
-<div class="chatInput"><input id="chatText" placeholder="Ask something..." onkeydown="if(event.key==='Enter')send()"><button onclick="send()">➤</button></div>
+<div class="chatHead">🤖 YojanaAI Assistant<br><small>Simple answers • Scheme guidance</small></div>
+<div class="messages" id="messages"><div class="msg">Hello! 👋<br><br>Ask me about scholarships, eligibility, documents or government schemes.</div></div>
+<div class="chatInput"><input id="chatBox" placeholder="Ask something..." onkeydown="if(event.key==='Enter')send()"><button onclick="send()">➤</button></div>
 </div>
 </div>
-</section>
+</div>
 
 <!-- TRACKER -->
-<section class="page" id="tracker">
+<div id="tracker" class="page">
 <div class="pageIn">
 <div class="pageTitle"><h1>📋 Application Tracker</h1><p>Track your application progress.</p></div>
 <div class="panel">
-<div class="panelHead"><h3>Post-Matric Scholarship</h3><span class="status missing">UNDER VERIFICATION</span></div>
+<h3>Post-Matric Scholarship</h3>
 <div class="timeline">
-<div class="tStep done"><div class="circle">✓</div><small>Documents Prepared</small></div>
-<div class="tStep done"><div class="circle">✓</div><small>Submitted</small></div>
-<div class="tStep current"><div class="circle">●</div><small>Under Verification</small></div>
-<div class="tStep"><div class="circle">4</div><small>Approved</small></div>
-<div class="tStep"><div class="circle">5</div><small>Benefit Received</small></div>
+<div class="tstep done"><div class="circle">✓</div><small>Documents</small></div>
+<div class="tstep done"><div class="circle">✓</div><small>Submitted</small></div>
+<div class="tstep current"><div class="circle">●</div><small>Verification</small></div>
+<div class="tstep"><div class="circle">4</div><small>Approved</small></div>
+<div class="tstep"><div class="circle">5</div><small>Received</small></div>
 </div>
-<p style="font-size:11px;color:var(--muted)">⚠️ Status is user-updated unless connected to an official government API.</p>
+<p style="font-size:11px;color:var(--mut)">⚠️ Demo tracking. Government status APIs are not connected.</p>
 </div>
 </div>
-</section>
+</div>
 
 <!-- DOCUMENTS -->
-<section class="page" id="documents">
+<div id="documents" class="page">
 <div class="pageIn">
-<div class="pageTitle"><h1>📄 Document Center</h1><p>Manage documents required for your applications.</p></div>
-<div class="panel"><div class="panelHead"><h3>Application Documents</h3><b style="color:var(--green)">5 / 7 Ready</b></div>
-<div id="docs"></div>
-<button class="primary" onclick="scan()" style="margin-top:18px">🤖 Scan Document</button>
+<div class="pageTitle"><h1>📄 Document Center</h1><p>Manage your application documents.</p></div>
+<div class="panel">
+<h3>Application Documents</h3>
+<div id="docList"></div>
+<button class="primary match" onclick="scan()">🤖 AI Scan Document</button>
 </div>
 </div>
-</section>
+</div>
 
-<!-- MODALS -->
-<div class="overlay" id="modal"><div class="modal">
-<div class="modalHead"><h2 id="modalTitle">Details</h2><button class="close" onclick="closeModal()">×</button></div>
+<!-- MODAL -->
+<div class="overlay" id="overlay">
+<div class="modal">
+<div class="modalHead"><h2 id="modalTitle"></h2><button class="close" onclick="closeModal()">×</button></div>
 <div id="modalBody"></div>
-</div></div>
-
-<div class="overlay" id="loginModal"><div class="modal" style="max-width:430px;text-align:center">
-<div class="logo" style="justify-content:center"><i class="fa-solid fa-landmark"></i></div>
-<h2 style="font-size:27px;color:var(--navy);margin:15px">Welcome to YojanaAI</h2>
-<p style="font-size:13px;color:var(--muted);margin-bottom:18px">Create your profile to discover personalized schemes.</p>
-<input value="Avni" style="margin-bottom:9px"><input placeholder="Email address" style="margin-bottom:9px">
-<button class="primary" style="width:100%" onclick="enter()">Continue to Dashboard</button>
-</div></div>
-
-<div id="toast" style="position:fixed;right:20px;bottom:20px;background:#102f44;color:white;
-padding:14px 18px;border-radius:9px;font-size:13px;display:none;z-index:200">Saved</div>
-
-<footer>
-<div class="footer">
-<div><div class="logo" style="color:#fff"><i class="fa-solid fa-landmark"></i>Yojana<span>AI</span></div>
-<p>AI-powered assistance for discovering government schemes.</p></div>
-<div><h4>Platform</h4><a onclick="openPage('matcher')">AI Matcher</a><a onclick="openPage('schemes')">Schemes</a></div>
-<div><h4>Tools</h4><a onclick="openPage('documents')">Documents</a><a onclick="openPage('tracker')">Tracker</a></div>
-<div><h4>Safety</h4><a>Privacy</a><a>Security</a><a>Disclaimer</a></div>
 </div>
-<div class="copy">© 2026 YojanaAI • University Project Demo • Verify information through official government sources.</div>
-</footer>
+</div>
+
+<!-- LOGIN -->
+<div class="overlay" id="loginBox">
+<div class="modal" style="max-width:430px">
+<h2 style="margin-bottom:10px">Welcome to YojanaAI 👋</h2>
+<p style="font-size:13px;color:var(--mut);margin-bottom:18px">Create your profile to continue.</p>
+<input placeholder="Your name" value="Avni" style="width:100%;padding:12px;border:1px solid var(--bd);border-radius:8px;margin-bottom:10px">
+<input placeholder="Email address" style="width:100%;padding:12px;border:1px solid var(--bd);border-radius:8px;margin-bottom:15px">
+<button class="primary match" onclick="enter()">Continue to Dashboard</button>
+</div>
+</div>
 
 <script>
 const schemes=[
-{id:1,n:"Post-Matric Scholarship",c:"Education",i:"fa-graduation-cap",b:"Up to ₹25,000/year",d:"15 Sep 2026",m:96,
-desc:"Financial assistance for eligible students pursuing post-matric education.",
-why:"Your student profile and income may match the basic criteria.",
-docs:["Aadhaar Card","Income Certificate","Residence Certificate","Educational Certificate","Bank Details"]},
-{id:2,n:"Student Credit Scheme",c:"Financial",i:"fa-book-open",b:"Education loan support",d:"30 Sep 2026",m:91,
-desc:"Financial support for students pursuing higher education.",
-why:"Your student status and education goal indicate a potential match.",
-docs:["Aadhaar Card","Admission Letter","Income Certificate","Bank Details"]},
-{id:3,n:"Skill Development Scheme",c:"Employment",i:"fa-laptop-code",b:"Free skill training",d:"Open",m:84,
-desc:"Training opportunities for eligible youth.",why:"Your age and student profile may make you suitable.",
-docs:["Aadhaar Card","Educational Certificate"]},
-{id:4,n:"Housing Assistance Scheme",c:"Housing",i:"fa-house",b:"Housing assistance",d:"Check portal",m:72,
-desc:"Support for eligible households.",why:"Household information can be compared with criteria.",
-docs:["Aadhaar Card","Income Certificate","Residence Certificate"]},
-{id:5,n:"Youth Employment Support",c:"Employment",i:"fa-briefcase",b:"Training + support",d:"Open",m:81,
-desc:"Training and employment support for young people.",why:"Your age and employment profile may qualify.",
-docs:["Aadhaar Card","Educational Certificate"]}
+{name:"Post-Matric Scholarship",cat:"Education",benefit:"Up to ₹25,000/year",match:96,desc:"Financial assistance for eligible students.",why:"Your student profile and income may match the basic criteria."},
+{name:"Student Credit Scheme",cat:"Financial",benefit:"Education loan support",match:91,desc:"Financial support for higher education.",why:"Your student status indicates a potential match."},
+{name:"Skill Development Scheme",cat:"Employment",benefit:"Free skill training",match:84,desc:"Training opportunities for eligible youth.",why:"Your age and student profile may make you suitable."},
+{name:"Housing Assistance",cat:"Housing",benefit:"Housing assistance",match:72,desc:"Support for eligible households.",why:"Your household information can be checked against criteria."},
+{name:"Youth Employment Support",cat:"Employment",benefit:"Training + support",match:81,desc:"Employment and training support.",why:"Your age may make you a potential match."}
 ];
 
-const docsData=[
-["Aadhaar Card","Identity proof",1],["Income Certificate","Required for scholarship",0],
-["Bank Account Details","Benefit transfer",1],["Residence Certificate","State residency",1],
-["Educational Certificate","Academic qualification",1]
-];
+let activeFilter="All";
 
-function card(s){
-return `<div class="card scheme"><div class="schemeTop"><div class="icon"><i class="fa-solid ${s.i}"></i></div>
-<span class="score">${s.m}% Match</span></div><h3>${s.n}</h3><p>${s.desc}</p>
-<div class="tags"><span class="tag">${s.c}</span><span class="tag">${s.d}</span></div>
-<div class="benefit">${s.b}</div><div class="actions">
-<button class="view" onclick="details(${s.id})">Details</button>
-<button class="save" onclick="toast('Scheme saved ⭐')">Save</button></div></div>`;
+const $=id=>document.getElementById(id);
+
+function show(id){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("show"));
+$(id).classList.add("show");
+window.scrollTo(0,0);
 }
 
-function render(){
-featured.innerHTML=schemes.slice(0,3).map(card).join("");
-allSchemes.innerHTML=schemes.map(card).join("");
-recommendations.innerHTML=schemes.slice(0,4).map(s=>`
-<div class="rec"><div class="icon"><i class="fa-solid ${s.i}"></i></div>
-<div class="recInfo"><strong>${s.n}</strong><small>${s.c}</small></div><b>${s.m}%</b></div>`).join("");
-docs.innerHTML=docsData.map(d=>`
-<div class="doc"><div class="icon">📄</div><div class="docInfo">
-<strong>${d[0]}</strong><small>${d[1]}</small></div>
-<span class="status ${d[2]?'ready':'missing'}">${d[2]?'READY':'MISSING'}</span></div>`).join("");
+function openLogin(){$("loginBox").classList.add("show")}
+function enter(){$("loginBox").classList.remove("show");show("dashboard")}
+
+function schemeCard(s,i){
+return `<div class="card"><div class="schemeTop"><div class="icon">🎓</div>
+<span class="score">${s.match}% Match</span></div>
+<h3>${s.name}</h3><p>${s.desc}</p>
+<div class="tags"><span class="tag">${s.cat}</span><span class="tag">Verified info</span></div>
+<div class="benefit">${s.benefit}</div>
+<div class="actions"><button class="view" onclick="details(${i})">Details</button>
+<button class="save" onclick="saveScheme()">Save</button></div></div>`;
 }
 
-function hide(){document.getElementById("home").style.display="none";
-document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"))}
-
-function home(){hide();home.style.display="block";scrollTo(0,0)}
-function openPage(x){hide();document.getElementById(x==="schemes"?"schemesPage":x).classList.add("active");scrollTo(0,0)}
-function login(){loginModal.classList.add("show")}
-function enter(){loginModal.classList.remove("show");openPage("dashboard");toast("Welcome to your dashboard 👋")}
-function closeModal(){modal.classList.remove("show")}
-
-function details(id){
-let s=schemes.find(x=>x.id===id);
-modalTitle.textContent=s.n;
-modalBody.innerHTML=`<div class="detail"><strong>🎯 AI Match</strong><span>${s.m}% potential match</span></div>
-<div class="detail"><strong>💰 Benefit</strong><span>${s.b}</span></div>
-<div class="detail"><strong>📅 Deadline</strong><span>${s.d}</span></div>
-<div class="detail"><strong>👤 Eligibility</strong><span>${s.desc}</span></div>
-<div class="detail"><strong>🤖 Why did AI recommend this?</strong><span>✓ ${s.why}<br>✓ Profile compared with available criteria.<br>⚠️ Final eligibility must be confirmed officially.</span></div>
-<div class="detail"><strong>📄 Documents</strong><span>• ${s.docs.join("<br>• ")}</span></div>
-<button class="primary" style="width:100%;margin-top:18px" onclick="toast('Official portal would open here')">Apply Through Official Portal</button>`;
-modal.classList.add("show");
+function renderSchemes(){
+let q=$("searchBox").value.toLowerCase();
+let arr=schemes.filter(s=>
+(activeFilter==="All"||s.cat===activeFilter)&&
+s.name.toLowerCase().includes(q));
+$("schemeGrid").innerHTML=arr.map((s)=>schemeCard(s,schemes.indexOf(s))).join("");
 }
 
-function search(){
-let q=search.value.toLowerCase();
-allSchemes.innerHTML=schemes.filter(s=>s.n.toLowerCase().includes(q)||s.c.toLowerCase().includes(q)).map(card).join("");
+function setFilter(x,el){
+activeFilter=x;
+document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));
+el.classList.add("active");
+renderSchemes();
 }
 
-function filter(c,b){
-document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));b.classList.add("active");
-allSchemes.innerHTML=(c==="All"?schemes:schemes.filter(s=>s.c===c)).map(card).join("");
+function details(i){
+let s=schemes[i];
+$("modalTitle").textContent=s.name;
+$("modalBody").innerHTML=`
+<div class="detail"><b>🎯 AI Match</b><span>${s.match}% potential match</span></div>
+<div class="detail"><b>💰 Expected Benefit</b><span>${s.benefit}</span></div>
+<div class="detail"><b>👤 Eligibility</b><span>${s.desc}</span></div>
+<div class="detail"><b>🤖 Why did AI recommend this?</b><span>✓ ${s.why}<br>✓ Your profile was compared with scheme criteria.<br>⚠️ Final eligibility must be confirmed officially.</span></div>
+<div class="detail"><b>📄 Required Documents</b><span>• Aadhaar Card<br>• Income Certificate<br>• Bank Details<br>• Educational Certificate</span></div>
+<button class="primary match" onclick="alert('Connect this button to the official government portal.')">Apply Through Official Portal</button>`;
+$("overlay").classList.add("show");
 }
+
+function closeModal(){$("overlay").classList.remove("show")}
+
+function saveScheme(){alert("⭐ Scheme saved to My Schemes")}
 
 function match(){
-let job=occupation.value,g=goal.value,inc=+income.value;
+let job=$("occupation").value,goal=$("goal").value,income=+$("income").value;
 let arr=schemes.map(s=>{
-let score=s.m;
-if(job==="Student"&&s.c==="Education")score+=4;
-if(g==="Education"&&s.c==="Education")score+=4;
-if(g==="Employment"&&s.c==="Employment")score+=5;
-if(inc<=300000)score+=2;
-return {...s,m:Math.min(score,99)}
-}).sort((a,b)=>b.m-a.m);
+let score=s.match;
+if(job==="Student"&&s.cat==="Education")score+=3;
+if(goal===s.cat)score+=5;
+if(income<=300000)score+=2;
+return {...s,match:Math.min(score,99)};
+}).sort((a,b)=>b.match-a.match);
 
-result.innerHTML=`<div style="background:#eaf7f9;padding:15px;border-radius:10px;font-size:13px">
-<b>🤖 AI Analysis Complete</b><br>${age.value} years • ${job} • ${state.value} • ₹${inc.toLocaleString()}</div>
-<h3 style="margin:20px 0;color:var(--navy)">Potential Matches</h3>${arr.slice(0,4).map(s=>`
-<div class="rec"><div class="icon"><i class="fa-solid ${s.i}"></i></div>
-<div class="recInfo"><strong>${s.n}</strong><small>${s.why}</small></div><b>${s.m}%</b></div>`).join("")}
-<p style="font-size:11px;color:#856b24;background:#fff5d7;padding:10px;margin-top:10px">
-⚠️ Match scores are indicative and do not guarantee official eligibility.</p>`;
+$("matchResult").innerHTML=`
+<h3 style="margin:22px 0;color:var(--n)">🤖 ${arr.length} potential matches found</h3>
+${arr.slice(0,4).map(s=>`
+<div class="rec"><div class="icon">🎓</div><div><strong>${s.name}</strong>
+<small>${s.why}</small></div><b>${s.match}%</b></div>`).join("")}
+<p style="font-size:11px;color:#856b24;background:#fff4d2;padding:10px;margin-top:12px">
+⚠️ AI scores are indicative and do not guarantee official eligibility.</p>`;
 }
 
 function send(){
-let x=chatText.value.trim();if(!x)return;
-messages.innerHTML+=`<div class="msg user">${safe(x)}</div>`;chatText.value="";
-setTimeout(()=>{messages.innerHTML+=`<div class="msg bot">${answer(x)}</div>`;
-messages.scrollTop=messages.scrollHeight},400);
+let text=$("chatBox").value.trim();
+if(!text)return;
+$("messages").innerHTML+=`<div class="msg user">${clean(text)}</div>`;
+$("chatBox").value="";
+setTimeout(()=>{
+$("messages").innerHTML+=`<div class="msg">${answer(text)}</div>`;
+$("messages").scrollTop=$("messages").scrollHeight;
+},350);
 }
+
+function clean(x){return x.replace(/[<>&"]/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]))}
 
 function answer(x){
 x=x.toLowerCase();
 if(x.includes("scholarship")||x.includes("student"))
-return "🎓 You can explore scholarships, student credit programs and skill-development schemes. Try the AI Matcher for personalized results.";
-if(x.includes("document"))return "📄 Common documents include Aadhaar, income certificate, residence certificate, bank details and educational certificates.";
-if(x.includes("income"))return "💰 Income is one eligibility factor. Age, occupation, state and other conditions may also matter.";
-if(x.includes("himachal"))return "📍 You can explore both Central Government and Himachal Pradesh state schemes.";
-return "🤖 I can help with schemes, eligibility, documents, deadlines and applications. Try asking about scholarships or documents.";
+return "🎓 Based on a student profile, you can explore Post-Matric Scholarships, Student Credit Schemes and Skill Development programs.";
+if(x.includes("document"))
+return "📄 Common documents include Aadhaar, income certificate, residence certificate, bank details and educational certificates.";
+if(x.includes("income"))
+return "💰 Income is one eligibility factor. Age, occupation, state and scheme-specific conditions may also apply.";
+if(x.includes("himachal"))
+return "📍 You can check both Central Government schemes and Himachal Pradesh state schemes.";
+return "🤖 I can help you with schemes, eligibility, documents, deadlines and applications. Try asking about scholarships.";
 }
 
-function safe(x){return x.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-
 function scan(){
-modalTitle.textContent="🤖 AI Document Scanner";
-modalBody.innerHTML=`<div style="text-align:center"><div class="icon" style="margin:auto">📄</div>
-<h3>Upload Document</h3><p style="font-size:13px;color:var(--muted);margin:8px">AI-assisted validation demo.</p>
-<input type="file" style="margin:15px 0"><button class="primary" style="width:100%" onclick="analyze()">Analyze Document</button>
-<div id="scanResult"></div></div>`;modal.classList.add("show");
+$("modalTitle").textContent="🤖 AI Document Scanner";
+$("modalBody").innerHTML=`
+<p style="font-size:13px;color:var(--mut)">Upload a document for an assistance/validation demo.</p>
+<input type="file" style="margin:18px 0;width:100%">
+<button class="primary match" onclick="analyze()">Analyze Document</button>`;
+$("overlay").classList.add("show");
 }
 
 function analyze(){
-scanResult.innerHTML=`<div style="background:#eaf8f0;padding:15px;margin-top:15px;text-align:left;
-border-radius:9px;font-size:12px;color:#17633e">✓ Document detected<br>✓ Readability passed<br>
-✓ Name appears readable<br>✓ Required fields detected<br><br><b>Status: Assistance Check Passed</b></div>`;
+$("modalBody").innerHTML+=`
+<div style="background:#e8f8ef;color:#17633e;padding:15px;border-radius:9px;font-size:12px;margin-top:12px">
+✓ Document detected<br>✓ Readability checked<br>✓ Name appears readable<br>
+✓ Required fields detected<br><br><b>Assistance Check Passed</b>
+</div>`;
 }
 
-function dark(){document.body.classList.toggle("dark");toast("Theme changed")}
-function toast(x){let t=document.getElementById("toast");t.textContent=x;t.style.display="block";
-setTimeout(()=>t.style.display="none",2200)}
-render();
+function init(){
+$("schemeGrid").innerHTML=schemes.map((s,i)=>schemeCard(s,i)).join("");
+$("recs").innerHTML=schemes.slice(0,4).map(s=>`
+<div class="rec"><div class="icon">🎓</div><div><strong>${s.name}</strong>
+<small>${s.cat}</small></div><b>${s.match}%</b></div>`).join("");
+
+let docs=["Aadhaar Card","Income Certificate","Bank Account Details","Residence Certificate","Educational Certificate"];
+$("docList").innerHTML=docs.map((d,i)=>`
+<div class="doc"><div class="icon">📄</div><div><strong>${d}</strong>
+<small>${i===1?"Required for scholarship":"Application document"}</small></div>
+<span class="status ${i===1?"missing":"ready"}">${i===1?"MISSING":"READY"}</span></div>`).join("");
+}
+
+init();
 </script>
 </body>
 </html>
